@@ -1,0 +1,14 @@
+C:\.netProject\OrderManagement\OrderManagement\OrderManagement.Model\bin\Debug\net6.0\OrderManagement.Model.deps.json
+C:\.netProject\OrderManagement\OrderManagement\OrderManagement.Model\bin\Debug\net6.0\OrderManagement.Model.runtimeconfig.json
+C:\.netProject\OrderManagement\OrderManagement\OrderManagement.Model\bin\Debug\net6.0\OrderManagement.Model.dll
+C:\.netProject\OrderManagement\OrderManagement\OrderManagement.Model\bin\Debug\net6.0\OrderManagement.Model.pdb
+C:\.netProject\OrderManagement\OrderManagement\OrderManagement.Model\obj\Debug\net6.0\OrderManagement.Model.csproj.AssemblyReference.cache
+C:\.netProject\OrderManagement\OrderManagement\OrderManagement.Model\obj\Debug\net6.0\OrderManagement.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\.netProject\OrderManagement\OrderManagement\OrderManagement.Model\obj\Debug\net6.0\OrderManagement.Model.AssemblyInfoInputs.cache
+C:\.netProject\OrderManagement\OrderManagement\OrderManagement.Model\obj\Debug\net6.0\OrderManagement.Model.AssemblyInfo.cs
+C:\.netProject\OrderManagement\OrderManagement\OrderManagement.Model\obj\Debug\net6.0\OrderManagement.Model.csproj.CoreCompileInputs.cache
+C:\.netProject\OrderManagement\OrderManagement\OrderManagement.Model\obj\Debug\net6.0\OrderManagement.Model.dll
+C:\.netProject\OrderManagement\OrderManagement\OrderManagement.Model\obj\Debug\net6.0\refint\OrderManagement.Model.dll
+C:\.netProject\OrderManagement\OrderManagement\OrderManagement.Model\obj\Debug\net6.0\OrderManagement.Model.pdb
+C:\.netProject\OrderManagement\OrderManagement\OrderManagement.Model\obj\Debug\net6.0\OrderManagement.Model.genruntimeconfig.cache
+C:\.netProject\OrderManagement\OrderManagement\OrderManagement.Model\obj\Debug\net6.0\ref\OrderManagement.Model.dll
