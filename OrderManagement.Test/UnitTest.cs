@@ -1,15 +1,7 @@
 using AutoFixture;
-using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using NSubstitute;
+using Microsoft.Extensions.DependencyInjection;
 using OrderManagement.Contrast;
-using OrderManagement.Model.Entities;
 using OrderManagement.Model.Models;
-using OrderManagement.Repository.GenericRepository;
-using OrderManagement.Repository.UnitOfWork;
-using OrderManagement.Services;
-using OrderManagement.UI.Controllers;
 
 namespace OrderManagement.Test
 {
@@ -24,59 +16,42 @@ namespace OrderManagement.Test
             fixture = new Fixture();
         }
 
-                [Fact]
+        [Fact]
         public async Task Calculate_Required_BandWidth()
         {
             // Arrange
-            var builder = WebApplication.CreateBuilder();
-            builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            builder.Services.AddScoped(typeof(DbContext), typeof(ApplicationContext));
-            builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
-            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
-            builder.Services.AddScoped(typeof(IOrderItemService), typeof(OrderItemService));
-            builder.Services.AddScoped(typeof(IOrderService), typeof(OrderService));
-            var service = builder.Services.BuildServiceProvider();
+            using (TestEnvInjection container = new TestEnvInjection())
+            {
+                var orderService = container.GetService().GetRequiredService<IOrderService>();
 
+                // Act
+                double realBandWidth = 293.8;
+                var testData = SeedOrderCreateData();
 
-            var unitMock = service.GetRequiredService<IUnitOfWork>();
-            var orderMock = service.GetRequiredService<IGenericRepository<Order>>();
-            var orderItemMock = service.GetRequiredService<IGenericRepository<OrderItem>>();
-            var productmMock = service.GetRequiredService<IProductService>();
-            var orderService = new OrderService(unitMock, orderMock, orderItemMock, productmMock);
-            double realBandWidth = 293.8;
-            var testData = SeedOrderCreateData();
+                // Act
+                var result = await orderService.CalcRequiredBinWidth(testData);
 
-            // Act
-            var result = await orderService.CalcRequiredBinWidth(testData);
+                // Assert
+                Assert.Equal(realBandWidth, result, 2);
+            }
 
-            // Assert
-            Assert.Equal(realBandWidth, result,1);
         }
 
         [Fact]
         public async Task Calc_Product_Size()
         {
             // Arrange
-            var builder = WebApplication.CreateBuilder();
-            builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            builder.Services.AddScoped(typeof(DbContext), typeof(ApplicationContext));
-            builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
-            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
-            builder.Services.AddScoped(typeof(IOrderItemService), typeof(OrderItemService));
-            builder.Services.AddScoped(typeof(IOrderService), typeof(OrderService));
-            
-            var service = builder.Services.BuildServiceProvider();
-            var unitMock = service.GetRequiredService<IUnitOfWork>();
-            var genericMock = service.GetRequiredService<IGenericRepository<Product>>();
-            var productService = new ProductService(unitMock, genericMock);
 
-            // Act
-            double result = await productService.CalcProductSize(Model.Enum.ProductTypeEnum.mug, 5);
+            using (TestEnvInjection container = new TestEnvInjection())
+            {
+                var productService = container.GetService().GetRequiredService<IProductService>();
 
-            // Assert
-            Assert.Equal(188, result, 1);
+                // Act
+                double result = await productService.CalcProductSize(Model.Enum.ProductTypeEnum.mug, 5);
+
+                // Assert
+                Assert.Equal(188, result, 1);
+            }
         }
 
         private OrderListCreateRequest SeedOrderCreateData()
@@ -94,7 +69,7 @@ namespace OrderManagement.Test
             };
             OrderCreateRequest orderTestCalendar = new OrderCreateRequest()
             {
-                ProductId = Model.Enum.ProductTypeEnum.calendar, 
+                ProductId = Model.Enum.ProductTypeEnum.calendar,
                 quanity = 2
             };
             OrderCreateRequest orderTestCanvas = new OrderCreateRequest()
